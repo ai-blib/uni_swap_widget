@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import {BigNumber as BN} from "bignumber.js";
-import { withNamespaces } from 'react-i18next';
 import { selectors, addPendingTx } from '../../ducks/web3connect';
 import Header from '../../components/Header';
 import NavigationTabs from '../../components/NavigationTabs';
@@ -88,11 +87,11 @@ class Send extends Component {
     const { value: inputBalance, decimals: inputDecimals } = selectors().getBalance(account, inputCurrency);
 
     if (inputBalance.isLessThan(BN(inputValue * 10 ** inputDecimals))) {
-      inputError = this.props.t("insufficientBalance");
+      inputError = 'Insufficient Balance';
     }
 
     if (inputValue === 'N/A') {
-      inputError = this.props.t("inputNotValid");
+      inputError = 'Not a valid input value';
     }
 
     return {
@@ -536,7 +535,7 @@ class Send extends Component {
       outputCurrency,
       recipient,
     } = this.state;
-    const { t, web3 } = this.props;
+    const { web3 } = this.props;
 
     const { selectors, account } = this.props;
     const { label: inputLabel } = selectors().getBalance(account, inputCurrency);
@@ -552,26 +551,24 @@ class Send extends Component {
       contextualInfo = inputError || outputError;
       isError = true;
     } else if (!inputCurrency || !outputCurrency) {
-      contextualInfo = t("selectTokenCont");
+      contextualInfo = 'Select a token to continue.';
     } else if (inputCurrency === outputCurrency) {
-      contextualInfo = t("differentToken");
+      contextualInfo = 'Must be different token.';
     } else if (!inputValue || !outputValue) {
       const missingCurrencyValue = !inputValue ? inputLabel : outputLabel;
-      contextualInfo = t("enterValueCont", {missingCurrencyValue});
+      contextualInfo = `Enter a ${missingCurrencyValue} value to continue.`;
     } else if (inputIsZero || outputIsZero) {
-      contextualInfo = t("noLiquidity");
+      contextualInfo = 'No liquidity.';
     } else if (this.isUnapproved()) {
-      contextualInfo = t("unlockTokenCont");
+      contextualInfo = 'Please unlock token to continue.';
     } else if (!recipient) {
-      contextualInfo = t("noRecipient");
+      contextualInfo = 'Enter a wallet address to send to.';
     } else if (!validRecipientAddress) {
-      contextualInfo = t("invalidRecipient");
+      contextualInfo = 'Please enter a valid wallet address recipient.';
     }
 
     return (
       <ContextualInfo
-        openDetailsText={t("transactionDetails")}
-        closeDetailsText={t("hideDetails")}
         contextualInfo={contextualInfo}
         isError={isError}
         renderTransactionDetails={this.renderTransactionDetails}
@@ -589,7 +586,7 @@ class Send extends Component {
       inputAmountB,
       lastEditedField,
     } = this.state;
-    const { t, selectors, account } = this.props;
+    const { selectors, account } = this.props;
 
     ReactGA.event({
       category: 'TransactionDetail',
@@ -644,10 +641,10 @@ class Send extends Component {
       return (
         <div>
           <div>
-            {t("youAreSending")} {b(`${+inputValue} ${inputLabel}`)}.
+            You are selling {b(`${+inputValue} ${inputLabel}`)}.
           </div>
           <div className="send__last-summary-text">
-            {recipientText} {t("willReceive")} {b(`${+minOutput} ${outputLabel}`)} {t("orTransFail")}
+            {recipientText} will receive at least {b(`${+minOutput} ${outputLabel}`)} or the transaction will fail.
           </div>
         </div>
       );
@@ -655,12 +652,12 @@ class Send extends Component {
       return (
         <div>
           <div>
-            {t("youAreSending")} {b(`${+outputValue} ${outputLabel}`)} {t("to")} {recipientText}.
+            You are sending {b(`${+outputValue} ${outputLabel}`)} to {recipientText}.
             {/*You are selling between {b(`${+inputValue} ${inputLabel}`)} to {b(`${+maxInput} ${inputLabel}`)}.*/}
           </div>
           <div className="send__last-summary-text">
             {/*{b(`${recipient.slice(0, 6)}...${recipient.slice(-4)}`)} will receive {b(`${+outputValue} ${outputLabel}`)}.*/}
-            {t("itWillCost")} {b(`${+maxInput} ${inputLabel}`)} {t("orTransFail")}
+            It will cost at most {b(`${+maxInput} ${inputLabel}`)} or the transaction will fail.
           </div>
         </div>
       );
@@ -668,7 +665,7 @@ class Send extends Component {
   }
 
   renderExchangeRate() {
-    const { t, account, selectors } = this.props;
+    const { account, selectors } = this.props;
     const { exchangeRate, inputCurrency, outputCurrency } = this.state;
     const { label: inputLabel } = selectors().getBalance(account, inputCurrency);
     const { label: outputLabel } = selectors().getBalance(account, outputCurrency);
@@ -677,7 +674,7 @@ class Send extends Component {
       return (
         <OversizedPanel hideBottom>
           <div className="swap__exchange-rate-wrapper">
-            <span className="swap__exchange-rate">{t("exchangeRate")}</span>
+            <span className="swap__exchange-rate">Exchange Rate</span>
             <span> - </span>
           </div>
         </OversizedPanel>
@@ -687,7 +684,7 @@ class Send extends Component {
     return (
       <OversizedPanel hideBottom>
         <div className="swap__exchange-rate-wrapper">
-          <span className="swap__exchange-rate">{t("exchangeRate")}</span>
+          <span className="swap__exchange-rate">Exchange Rate</span>
           <span>
             {`1 ${inputLabel} = ${exchangeRate.toFixed(7)} ${outputLabel}`}
           </span>
@@ -700,12 +697,12 @@ class Send extends Component {
     if (!currency || decimals === 0) {
       return '';
     }
-    const balanceInput = balance.dividedBy(BN(10 ** decimals)).toFixed(4)
-    return this.props.t("balance", { balanceInput })
+
+    return `Balance: ${balance.dividedBy(BN(10 ** decimals)).toFixed(4)}`
   }
 
   render() {
-    const { t, selectors, account } = this.props;
+    const { selectors, account } = this.props;
     const {
       lastEditedField,
       inputCurrency,
@@ -714,14 +711,14 @@ class Send extends Component {
       outputValue,
       recipient,
     } = this.state;
-    const estimatedText = `(${t("estimated")})`;
+    const estimatedText = '(estimated)';
 
     const { value: inputBalance, decimals: inputDecimals } = selectors().getBalance(account, inputCurrency);
     const { value: outputBalance, decimals: outputDecimals } = selectors().getBalance(account, outputCurrency);
     const { inputError, outputError, isValid } = this.validate();
 
     return (
-      <div className="send">
+      <div className="send ">
         <MediaQuery query="(max-width: 767px)">
           <Header />
         </MediaQuery>
@@ -735,57 +732,60 @@ class Send extends Component {
               'header--inactive': !this.props.isConnected,
             })}
           />
-          <CurrencyInputPanel
-            title={t("input")}
-            description={lastEditedField === OUTPUT ? estimatedText : ''}
-            extraText={this.renderBalance(inputCurrency, inputBalance, inputDecimals)}
-            onCurrencySelected={inputCurrency => this.setState({ inputCurrency }, this.recalcForm)}
-            onValueChange={this.updateInput}
-            selectedTokens={[inputCurrency, outputCurrency]}
-            selectedTokenAddress={inputCurrency}
-            value={inputValue}
-            errorMessage={inputError}
-          />
-          <OversizedPanel>
-            <div className="swap__down-arrow-background">
-              <img onClick={this.flipInputOutput} className="swap__down-arrow swap__down-arrow--clickable" src={isValid ? ArrowDownBlue : ArrowDownGrey} />
+
+          <div className='ani_title_fade_in'>
+            <CurrencyInputPanel
+              title="Input"
+              description={lastEditedField === OUTPUT ? estimatedText : ''}
+              extraText={this.renderBalance(inputCurrency, inputBalance, inputDecimals)}
+              onCurrencySelected={inputCurrency => this.setState({ inputCurrency }, this.recalcForm)}
+              onValueChange={this.updateInput}
+              selectedTokens={[inputCurrency, outputCurrency]}
+              selectedTokenAddress={inputCurrency}
+              value={inputValue}
+              errorMessage={inputError}
+            />
+            <OversizedPanel>
+              <div className="swap__down-arrow-background">
+                <img onClick={this.flipInputOutput} className="swap__down-arrow swap__down-arrow--clickable" src={isValid ? ArrowDownBlue : ArrowDownGrey} />
+              </div>
+            </OversizedPanel>
+            <CurrencyInputPanel
+              title="Output"
+              description={lastEditedField === INPUT ? estimatedText : ''}
+              extraText={this.renderBalance(outputCurrency, outputBalance, outputDecimals)}
+              onCurrencySelected={outputCurrency => this.setState({ outputCurrency }, this.recalcForm)}
+              onValueChange={this.updateOutput}
+              selectedTokens={[inputCurrency, outputCurrency]}
+              value={outputValue}
+              selectedTokenAddress={outputCurrency}
+              errorMessage={outputError}
+              disableUnlock
+            />
+            <OversizedPanel>
+              <div className="swap__down-arrow-background">
+                <img className="swap__down-arrow" src={isValid ? ArrowDownBlue : ArrowDownGrey} />
+              </div>
+            </OversizedPanel>
+            <AddressInputPanel
+              value={recipient}
+              onChange={address => this.setState({recipient: address})}
+            />
+            { this.renderExchangeRate() }
+            { this.renderSummary(inputError, outputError) }
+            <div className="swap__cta-container">
+              <button
+                className={classnames('swap__cta-btn', {
+                  'swap--inactive': !this.props.isConnected,
+                })}
+                disabled={!isValid}
+                onClick={this.onSend}
+              >
+                Send
+              </button>
             </div>
-          </OversizedPanel>
-          <CurrencyInputPanel
-            title={t("output")}
-            description={lastEditedField === INPUT ? estimatedText : ''}
-            extraText={this.renderBalance(outputCurrency, outputBalance, outputDecimals)}
-            onCurrencySelected={outputCurrency => this.setState({ outputCurrency }, this.recalcForm)}
-            onValueChange={this.updateOutput}
-            selectedTokens={[inputCurrency, outputCurrency]}
-            value={outputValue}
-            selectedTokenAddress={outputCurrency}
-            errorMessage={outputError}
-            disableUnlock
-          />
-          <OversizedPanel>
-            <div className="swap__down-arrow-background">
-              <img className="swap__down-arrow" src={isValid ? ArrowDownBlue : ArrowDownGrey} />
-            </div>
-          </OversizedPanel>
-          <AddressInputPanel
-            t={this.props.t}
-            value={recipient}
-            onChange={address => this.setState({recipient: address})}
-          />
-          { this.renderExchangeRate() }
-          { this.renderSummary(inputError, outputError) }
-          <div className="swap__cta-container">
-            <button
-              className={classnames('swap__cta-btn', {
-                'swap--inactive': !this.props.isConnected,
-              })}
-              disabled={!isValid}
-              onClick={this.onSend}
-            >
-              {t("send")}
-            </button>
           </div>
+
         </div>
       </div>
     );
@@ -804,7 +804,7 @@ export default connect(
     selectors: () => dispatch(selectors()),
     addPendingTx: id => dispatch(addPendingTx(id)),
   }),
-)(withNamespaces()(Send));
+)(Send);
 
 const b = text => <span className="swap__highlight-text">{text}</span>;
 
