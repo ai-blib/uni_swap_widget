@@ -4,9 +4,12 @@
   &__wrapper {
     height: 100%;
     position: relative;
-    margin: auto;
-    max-width: 560px;
-    width: 100%;
+
+    @media only screen and (min-width : 768px) {
+      margin: auto;
+      max-width: 560px;
+      width: 100%;
+    }
 
     & > div {
       position: absolute;
@@ -21,25 +24,9 @@
 #app-container {
   width: 100vw;
   height: 100vh;
-
   @extend %col-nowrap;
-}
 
-
-@keyframes title_fade_in {
-  from {
-    opacity: 0.5;
+  @media only screen and (min-width : 768px) {
+    //max-width: 560px;
   }
-  to {
-    opacity: 1;
-  }
-}
-
-.ani_title_fade_in {
-  position: relative;
-  opacity: 0;
-  animation: title_fade_in cubic-bezier(0.23, 1, 0.32, 1) 1;
-  animation-fill-mode: forwards;
-  animation-duration: 1.2s;
-  animation-delay: 0s;
 }
