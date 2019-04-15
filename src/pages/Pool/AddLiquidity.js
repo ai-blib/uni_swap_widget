@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import classnames from "classnames";
+import { withNamespaces } from 'react-i18next';
 import CurrencyInputPanel from '../../components/CurrencyInputPanel';
 import OversizedPanel from '../../components/OversizedPanel';
 import ContextualInfo from '../../components/ContextualInfo';
@@ -9,8 +10,6 @@ import NavigationTabs from '../../components/NavigationTabs';
 import { selectors, addPendingTx } from '../../ducks/web3connect';
 import PlusBlue from '../../assets/images/plus-blue.svg';
 import PlusGrey from '../../assets/images/plus-grey.svg';
-import DropdownBlue from "../../assets/images/dropdown-blue.svg";
-import DropupBlue from "../../assets/images/dropup-blue.svg";
 import { getBlockDeadline } from '../../helpers/web3-utils';
 import { retry } from '../../helpers/promise-utils';
 import ModeSelector from './ModeSelector';
@@ -51,10 +50,11 @@ class AddLiquidity extends Component {
   };
 
   shouldComponentUpdate(nextProps, nextState) {
-    const { isConnected, account, exchangeAddresses, balances, web3 } = this.props;
+    const { t, isConnected, account, exchangeAddresses, balances, web3 } = this.props;
     const { inputValue, outputValue, inputCurrency, outputCurrency, lastEditedField } = this.state;
 
     return isConnected !== nextProps.isConnected ||
+      t !== nextProps.t ||
       account !== nextProps.account ||
       exchangeAddresses !== nextProps.exchangeAddresses ||
       web3 !== nextProps.web3 ||
@@ -111,7 +111,7 @@ class AddLiquidity extends Component {
   };
 
   getBalance(currency) {
-    const { selectors, account } = this.props;
+    const { t, selectors, account } = this.props;
 
     if (!currency) {
       return '';
@@ -122,7 +122,8 @@ class AddLiquidity extends Component {
       return '';
     }
 
-    return `Balance: ${value.dividedBy(10 ** decimals).toFixed(4)}`;
+    const balanceInput = value.dividedBy(10 ** decimals).toFixed(4);
+    return t("balance", { balanceInput });
   }
 
   isUnapproved() {
@@ -271,7 +272,7 @@ class AddLiquidity extends Component {
   }
 
   validate() {
-    const { selectors, account } = this.props;
+    const { t, selectors, account } = this.props;
     const {
       inputValue, outputValue,
       inputCurrency, outputCurrency,
@@ -291,11 +292,11 @@ class AddLiquidity extends Component {
     const { value: tokenValue, decimals } = selectors().getBalance(account, outputCurrency);
 
     if (ethValue.isLessThan(BN(inputValue * 10 ** 18))) {
-      inputError = 'Insufficient Balance';
+      inputError = t("insufficientBalance");
     }
 
     if (tokenValue.isLessThan(BN(outputValue * 10 ** decimals))) {
-      outputError = 'Insufficient Balance';
+      outputError = t("insufficientBalance");
     }
 
     return {
@@ -306,18 +307,19 @@ class AddLiquidity extends Component {
   }
 
   renderInfo() {
+    const t = this.props.t;
     const blank = (
       <div className="pool__summary-panel">
         <div className="pool__exchange-rate-wrapper">
-          <span className="pool__exchange-rate">Exchange Rate</span>
+          <span className="pool__exchange-rate">{t("exchangeRate")}</span>
           <span> - </span>
         </div>
         <div className="pool__exchange-rate-wrapper">
-          <span className="swap__exchange-rate">Current Pool Size</span>
+          <span className="swap__exchange-rate">{t("currentPoolSize")}</span>
           <span> - </span>
         </div>
         <div className="pool__exchange-rate-wrapper">
-          <span className="swap__exchange-rate">Your Pool Share</span>
+          <span className="swap__exchange-rate">{t("yourPoolShare")}</span>
           <span> - </span>
         </div>
       </div>
@@ -353,16 +355,16 @@ class AddLiquidity extends Component {
       return (
         <div className="pool__summary-panel">
           <div className="pool__exchange-rate-wrapper">
-            <span className="pool__exchange-rate">Exchange Rate</span>
+            <span className="pool__exchange-rate">{t("exchangeRate")}</span>
             <span>{`1 ETH = ${rateText} ${label}`}</span>
           </div>
           <div className="pool__exchange-rate-wrapper">
-            <span className="swap__exchange-rate">Current Pool Size</span>
+            <span className="swap__exchange-rate">{t("currentPoolSize")}</span>
             <span>{` ${ethValue.dividedBy(10 ** 18).toFixed(2)} ${eth} + ${tokenValue.dividedBy(10 ** decimals).toFixed(2)} ${label}`}</span>
           </div>
           <div className="pool__exchange-rate-wrapper">
             <span className="swap__exchange-rate">
-              Your Pool Share ({ownership.multipliedBy(100).toFixed(2)}%)
+              {t("yourPoolShare")} ({ownership.multipliedBy(100).toFixed(2)}%)
             </span>
             <span>{`${ownedEth.toFixed(2)} ETH + ${ownedToken.toFixed(2)} ${label}`}</span>
           </div>
@@ -377,16 +379,16 @@ class AddLiquidity extends Component {
     return (
       <div className="pool__summary-panel">
         <div className="pool__exchange-rate-wrapper">
-          <span className="pool__exchange-rate">Exchange Rate</span>
+          <span className="pool__exchange-rate">{t("exchangeRate")}</span>
           <span>{`1 ETH = ${tokenValue.multipliedBy(10 ** (18 - decimals)).dividedBy(ethValue).toFixed(4)} ${label}`}</span>
         </div>
         <div className="pool__exchange-rate-wrapper">
-          <span className="swap__exchange-rate">Current Pool Size</span>
+          <span className="swap__exchange-rate">{t("currentPoolSize")}</span>
           <span>{` ${ethValue.dividedBy(10 ** 18).toFixed(2)} ${eth} + ${tokenValue.dividedBy(10 ** decimals).toFixed(2)} ${label}`}</span>
         </div>
         <div className="pool__exchange-rate-wrapper">
             <span className="swap__exchange-rate">
-              Your Pool Share ({ownership.multipliedBy(100).toFixed(2)}%)
+            {t("yourPoolShare")} ({ownership.multipliedBy(100).toFixed(2)}%)
             </span>
           <span>{`${ownedEth.toFixed(2)} ETH + ${ownedToken.toFixed(2)} ${label}`}</span>
         </div>
@@ -395,7 +397,7 @@ class AddLiquidity extends Component {
   }
 
   renderSummary(inputError, outputError) {
-    const { selectors, exchangeAddresses: { fromToken } } = this.props;
+    const { t, selectors, exchangeAddresses: { fromToken } } = this.props;
     const {
       inputValue,
       outputValue,
@@ -412,22 +414,24 @@ class AddLiquidity extends Component {
       contextualInfo = inputError || outputError;
       isError = true;
     } else if (!inputCurrency || !outputCurrency) {
-      contextualInfo = 'Select a token to continue.';
+      contextualInfo = t("selectTokenCont");
     } else if (inputCurrency === outputCurrency) {
-      contextualInfo = 'Must be different token.';
+      contextualInfo = t("differentToken");
     } else if (![inputCurrency, outputCurrency].includes('ETH')) {
-      contextualInfo = 'One of the input must be ETH.';
+      contextualInfo = t("mustBeETH");
     } else if (inputIsZero || outputIsZero) {
-      contextualInfo = 'Amount cannot be zero.';
+      contextualInfo = t("noZero");
     } else if (this.isUnapproved()) {
-      contextualInfo = 'Please unlock token to continue.';
+      contextualInfo = t("unlockTokenCont");
     } else if (!inputValue || !outputValue) {
-      contextualInfo = `Enter a ${inputCurrency} or ${label} value to continue.`;
+      contextualInfo = t("enterCurrencyOrLabelCont", {inputCurrency, label});
     }
 
     return (
       <ContextualInfo
         key="context-info"
+        openDetailsText={t("transactionDetails")}
+        closeDetailsText={t("hideDetails")}
         contextualInfo={contextualInfo}
         isError={isError}
         renderTransactionDetails={this.renderTransactionDetails}
@@ -436,7 +440,7 @@ class AddLiquidity extends Component {
   }
 
   renderTransactionDetails = () => {
-    const { selectors, exchangeAddresses: { fromToken }, account } = this.props;
+    const { t, selectors, exchangeAddresses: { fromToken }, account } = this.props;
     const {
       inputValue,
       outputValue,
@@ -449,17 +453,17 @@ class AddLiquidity extends Component {
       action: 'Open',
     });
 
-    const { value: tokenReserve, decimals, label } = selectors().getTokenBalance(outputCurrency, fromToken[outputCurrency]);
+    const { value: tokenReserve, label } = selectors().getTokenBalance(outputCurrency, fromToken[outputCurrency]);
     const { value: ethReserve } = selectors().getBalance(fromToken[outputCurrency]);
     const { decimals: poolTokenDecimals } = selectors().getBalance(account, fromToken[outputCurrency]);
 
     if (this.isNewExchange()) {
       return (
         <div>
-          <div className="pool__summary-item">You are adding {b(`${inputValue} ETH`)} and {b(`${outputValue} ${label}`)} to the liquidity pool.</div>
-          <div className="pool__summary-item">You are setting the initial exchange rate to {b(`1 ETH = ${BN(outputValue).dividedBy(inputValue).toFixed(4)} ${label}`)}.</div>
-          <div className="pool__summary-item">You will mint {b(`${inputValue} liquidity tokens`)}.</div>
-          <div className="pool__summary-item">Current total supply of liquidity tokens is 0.</div>
+          <div className="pool__summary-item">{t("youAreAdding")} {b(`${inputValue} ETH`)} {t("and")} {b(`${outputValue} ${label}`)} {t("intoPool")}</div>
+          <div className="pool__summary-item">{t("youAreSettingExRate")} {b(`1 ETH = ${BN(outputValue).dividedBy(inputValue).toFixed(4)} ${label}`)}.</div>
+          <div className="pool__summary-item">{t("youWillMint")} {b(`${inputValue}`)} {t("liquidityTokens")}</div>
+          <div className="pool__summary-item">{t("totalSupplyIs0")}</div>
         </div>
       );
     }
@@ -467,23 +471,24 @@ class AddLiquidity extends Component {
     const SLIPPAGE = 0.025;
     const minOutput = BN(outputValue).multipliedBy(1 - SLIPPAGE);
     const maxOutput = BN(outputValue).multipliedBy(1 + SLIPPAGE);
-    const minPercentage = minOutput.dividedBy(minOutput.plus(tokenReserve)).multipliedBy(100);
-    const maxPercentage = maxOutput.dividedBy(maxOutput.plus(tokenReserve)).multipliedBy(100);
+    // const minPercentage = minOutput.dividedBy(minOutput.plus(tokenReserve)).multipliedBy(100);
+    // const maxPercentage = maxOutput.dividedBy(maxOutput.plus(tokenReserve)).multipliedBy(100);
     const liquidityMinted = BN(inputValue).multipliedBy(totalSupply.dividedBy(ethReserve));
     const adjTotalSupply = totalSupply.dividedBy(10 ** poolTokenDecimals);
 
     return (
       <div>
-        <div className="pool__summary-item">You are adding between {b(`${+BN(inputValue).toFixed(7)} ETH`)} and {b(`${+minOutput.toFixed(7)} - ${+maxOutput.toFixed(7)} ${label}`)} into the liquidity pool.</div>
-        <div className="pool__summary-item">You will mint {b(+liquidityMinted.toFixed(7))} liquidity tokens.</div>
-        <div className="pool__summary-item">Current total supply of liquidity tokens is {b(+adjTotalSupply.toFixed(7))}</div>
-        <div className="pool__summary-item">At current exchange rate, each pool token is worth {b(+ethReserve.dividedBy(totalSupply).toFixed(7))} ETH and {b(+tokenReserve.dividedBy(totalSupply).toFixed(7))} {label}</div>
+        <div className="pool__summary-modal__item">{t("youAreAdding")} {b(`${+BN(inputValue).toFixed(7)} ETH`)} {t("and")} {b(`${+minOutput.toFixed(7)} - ${+maxOutput.toFixed(7)} ${label}`)} {t("intoPool")}</div>
+        <div className="pool__summary-modal__item">{t("youWillMint")} {b(+liquidityMinted.toFixed(7))} {t("liquidityTokens")}</div>
+        <div className="pool__summary-modal__item">{t("totalSupplyIs")} {b(+adjTotalSupply.toFixed(7))}</div>
+        <div className="pool__summary-modal__item">{t("tokenWorth")} {b(+ethReserve.dividedBy(totalSupply).toFixed(7))} ETH {t("and")} {b(+tokenReserve.dividedBy(totalSupply).toFixed(7))} {label}</div>
       </div>
     );
   }
 
   render() {
     const {
+      t,
       isConnected,
       exchangeAddresses: { fromToken },
       selectors,
@@ -517,18 +522,18 @@ class AddLiquidity extends Component {
             ? (
               <div className="pool__new-exchange-warning">
                 <div className="pool__new-exchange-warning-text">
-                  🚰 You are the first person to add liquidity!
+                  <span role='img' aria-label='liquidity'>🚰</span> {t("firstLiquidity")}
                 </div>
                 <div className="pool__new-exchange-warning-text">
-                  {`The initial exchange rate will be set based on your deposits. Please make sure that your ETH and ${label} deposits have the same fiat value.`}
+                  { t("initialExchangeRate", { label }) }
                 </div>
               </div>
             )
             : null
         }
-        <ModeSelector title="Add Liquidity" />
+        <ModeSelector title={t("addLiquidity")}/>
         <CurrencyInputPanel
-          title="Deposit"
+          title={t("deposit")}
           extraText={this.getBalance(inputCurrency)}
           onValueChange={this.onInputChange}
           selectedTokenAddress="ETH"
@@ -538,12 +543,12 @@ class AddLiquidity extends Component {
         />
         <OversizedPanel>
           <div className="swap__down-arrow-background">
-            <img className="swap__down-arrow" src={isValid ? PlusBlue : PlusGrey} />
+            <img className="swap__down-arrow" src={isValid ? PlusBlue : PlusGrey} alt='plus' />
           </div>
         </OversizedPanel>
         <CurrencyInputPanel
-          title="Deposit"
-          description={this.isNewExchange() ? '(estimated)' : ''}
+          title={t("deposit")}
+          description={this.isNewExchange() ? `(${t("estimated")})` : ''}
           extraText={this.getBalance(outputCurrency)}
           selectedTokenAddress={outputCurrency}
           onCurrencySelected={currency => {
@@ -569,7 +574,7 @@ class AddLiquidity extends Component {
             disabled={!isValid}
             onClick={this.onAddLiquidity}
           >
-            Add Liquidity
+            {t("addLiquidity")}
           </button>
         </div>
       </div>
@@ -579,7 +584,7 @@ class AddLiquidity extends Component {
 
 export default connect(
   state => ({
-    isConnected: Boolean(state.web3connect.account) && state.web3connect.networkId == (process.env.REACT_APP_NETWORK_ID||1),
+    isConnected: Boolean(state.web3connect.account) && state.web3connect.networkId === (process.env.REACT_APP_NETWORK_ID||1),
     account: state.web3connect.account,
     balances: state.web3connect.balances,
     web3: state.web3connect.web3,
@@ -589,7 +594,7 @@ export default connect(
     selectors: () => dispatch(selectors()),
     addPendingTx: id => dispatch(addPendingTx(id)),
   })
-)(AddLiquidity);
+)(withNamespaces()(AddLiquidity));
 
 function b(text) {
   return <span className="swap__highlight-text">{text}</span>

@@ -10,8 +10,6 @@ import AddressInputPanel from '../../components/AddressInputPanel';
 import CurrencyInputPanel from '../../components/CurrencyInputPanel';
 import ContextualInfo from '../../components/ContextualInfo';
 import OversizedPanel from '../../components/OversizedPanel';
-import DropdownBlue from "../../assets/images/dropdown-blue.svg";
-import DropupBlue from "../../assets/images/dropup-blue.svg";
 import ArrowDownBlue from '../../assets/images/arrow-down-blue.svg';
 import ArrowDownGrey from '../../assets/images/arrow-down-grey.svg';
 import { getBlockDeadline } from '../../helpers/web3-utils';
@@ -583,7 +581,6 @@ class Send extends Component {
       outputValue,
       outputCurrency,
       recipient,
-      inputAmountB,
       lastEditedField,
     } = this.state;
     const { selectors, account } = this.props;
@@ -597,10 +594,10 @@ class Send extends Component {
     const TOKEN_ALLOWED_SLIPPAGE = 0.04;
 
     const type = getSendType(inputCurrency, outputCurrency);
-    const { label: inputLabel, decimals: inputDecimals } = selectors().getBalance(account, inputCurrency);
-    const { label: outputLabel, decimals: outputDecimals } = selectors().getBalance(account, outputCurrency);
+    const { label: inputLabel } = selectors().getBalance(account, inputCurrency);
+    const { label: outputLabel } = selectors().getBalance(account, outputCurrency);
 
-    const label = lastEditedField === INPUT ? outputLabel : inputLabel;
+    // const label = lastEditedField === INPUT ? outputLabel : inputLabel;
     let minOutput;
     let maxInput;
 
@@ -746,7 +743,7 @@ class Send extends Component {
           />
           <OversizedPanel>
             <div className="swap__down-arrow-background">
-              <img onClick={this.flipInputOutput} className="swap__down-arrow swap__down-arrow--clickable" src={isValid ? ArrowDownBlue : ArrowDownGrey} />
+              <img onClick={this.flipInputOutput} className="swap__down-arrow swap__down-arrow--clickable" alt='arrow' src={isValid ? ArrowDownBlue : ArrowDownGrey} />
             </div>
           </OversizedPanel>
           <CurrencyInputPanel
@@ -763,7 +760,7 @@ class Send extends Component {
           />
           <OversizedPanel>
             <div className="swap__down-arrow-background">
-              <img className="swap__down-arrow" src={isValid ? ArrowDownBlue : ArrowDownGrey} />
+              <img className="swap__down-arrow" src={isValid ? ArrowDownBlue : ArrowDownGrey} alt='arrow' />
             </div>
           </OversizedPanel>
           <AddressInputPanel
@@ -792,7 +789,7 @@ class Send extends Component {
 export default connect(
   state => ({
     balances: state.web3connect.balances,
-    isConnected: !!state.web3connect.account && state.web3connect.networkId == (process.env.REACT_APP_NETWORK_ID||1),
+    isConnected: !!state.web3connect.account && state.web3connect.networkId === (process.env.REACT_APP_NETWORK_ID||1),
     account: state.web3connect.account,
     web3: state.web3connect.web3,
     exchangeAddresses: state.addresses.exchangeAddresses,
