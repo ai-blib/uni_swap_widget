@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import { useWeb3Context, Connectors } from 'web3-react'
-import styled from 'styled-components'
+import styled, { keyframes } from 'styled-components'
 import { ethers } from 'ethers'
 import { useTranslation } from 'react-i18next'
 import { isMobile } from 'react-device-detect'
-
-import { Spinner } from '../../theme'
-import Circle from '../../assets/images/circle.svg'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCircleNotch } from '@fortawesome/free-solid-svg-icons'
 
 const { Connector } = Connectors
 
@@ -21,10 +20,20 @@ const Message = styled.h2`
   color: ${({ theme }) => theme.uniswapPink};
 `
 
-const SpinnerWrapper = styled(Spinner)`
+const rotate = keyframes`
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+`
+const Spinner = styled.div`
   font-size: 4rem;
 
   svg {
+    animation: 2s ${rotate} linear infinite;
+
     path {
       color: ${({ theme }) => theme.uniswapPink};
     }
@@ -95,7 +104,9 @@ export default function Web3ReactManager({ children }) {
   } else if (!active) {
     return showLoader ? (
       <MessageWrapper>
-        <SpinnerWrapper src={Circle} />
+        <Spinner>
+          <FontAwesomeIcon icon={faCircleNotch} />
+        </Spinner>
       </MessageWrapper>
     ) : null
   } else {

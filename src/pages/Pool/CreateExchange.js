@@ -142,7 +142,7 @@ function CreateExchange({ history, location }) {
         <SummaryText>{errorMessage ? errorMessage : t('enterTokenCont')}</SummaryText>
       </CreateExchangeWrapper>
       <Flex>
-        <Button disabled={!isValid} onClick={createExchange}>
+        <Button disabled={!isValid} onClick={createExchange} fullWidth>
           {t('createExchange')}
         </Button>
       </Flex>

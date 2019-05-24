@@ -305,7 +305,7 @@ export default function AddLiquidity() {
         <>
           <div>
             {t('youAreAdding')} {b(`${amountFormatter(inputValueParsed, 18, 4)} ETH`)} {t('and')} {'at most'}{' '}
-            {b(`${amountFormatter(outputValueMax, decimals, 4)} ${symbol}`)} {t('intoPool')}
+            {b(`${amountFormatter(outputValueMax, 18, 4)} ${symbol}`)} {t('intoPool')}
           </div>
           <div>
             {t('youWillMint')} {b(amountFormatter(liquidityMinted, 18, 4))} {t('liquidityTokens')}
@@ -405,7 +405,7 @@ export default function AddLiquidity() {
 
   // parse input value
   useEffect(() => {
-    if (isNewExchange === false && inputValue && marketRate && lastEditedField === INPUT && decimals) {
+    if (isNewExchange === false && inputValue && marketRate && lastEditedField === INPUT) {
       try {
         const parsedValue = ethers.utils.parseUnits(inputValue, 18)
 
@@ -418,12 +418,10 @@ export default function AddLiquidity() {
         const currencyAmount = marketRate
           .mul(parsedValue)
           .div(ethers.utils.bigNumberify(10).pow(ethers.utils.bigNumberify(18)))
-          .div(ethers.utils.bigNumberify(10).pow(ethers.utils.bigNumberify(18 - decimals)))
-
         setOutputValueParsed(currencyAmount)
         dispatchAddLiquidityState({
           type: 'UPDATE_DEPENDENT_VALUE',
-          payload: { field: OUTPUT, value: amountFormatter(currencyAmount, decimals, 4, false) }
+          payload: { field: OUTPUT, value: amountFormatter(currencyAmount, 18, 4, false) }
         })
 
         return () => {
@@ -439,13 +437,13 @@ export default function AddLiquidity() {
         setOutputError(t('inputNotValid'))
       }
     }
-  }, [inputValue, isNewExchange, lastEditedField, marketRate, decimals, t])
+  }, [inputValue, isNewExchange, lastEditedField, marketRate, t])
 
   // parse output value
   useEffect(() => {
-    if (isNewExchange === false && outputValue && marketRateInverted && lastEditedField === OUTPUT && decimals) {
+    if (isNewExchange === false && outputValue && marketRateInverted && lastEditedField === OUTPUT) {
       try {
-        const parsedValue = ethers.utils.parseUnits(outputValue, decimals)
+        const parsedValue = ethers.utils.parseUnits(outputValue, 18)
 
         if (parsedValue.lte(ethers.constants.Zero) || parsedValue.gte(ethers.constants.MaxUint256)) {
           throw Error()
@@ -455,8 +453,7 @@ export default function AddLiquidity() {
 
         const currencyAmount = marketRateInverted
           .mul(parsedValue)
-          .div(ethers.utils.bigNumberify(10).pow(ethers.utils.bigNumberify(decimals)))
-
+          .div(ethers.utils.bigNumberify(10).pow(ethers.utils.bigNumberify(18)))
         setInputValueParsed(currencyAmount)
         dispatchAddLiquidityState({
           type: 'UPDATE_DEPENDENT_VALUE',
@@ -476,7 +473,7 @@ export default function AddLiquidity() {
         setInputError(t('inputNotValid'))
       }
     }
-  }, [outputValue, isNewExchange, lastEditedField, marketRateInverted, decimals, t])
+  }, [outputValue, isNewExchange, lastEditedField, marketRateInverted, t])
 
   // input validation
   useEffect(() => {
@@ -488,14 +485,14 @@ export default function AddLiquidity() {
       }
     }
 
-    if (outputValueMax && outputBalance) {
-      if (outputValueMax.gt(outputBalance)) {
+    if (outputValueParsed && outputBalance) {
+      if (outputValueParsed.gt(outputBalance)) {
         setOutputError(t('insufficientBalance'))
       } else {
         setOutputError(null)
       }
     }
-  }, [inputValueParsed, inputBalance, outputValueMax, outputBalance, t])
+  }, [inputValueParsed, inputBalance, outputValueParsed, outputBalance, t])
 
   const allowance = useAddressAllowance(account, outputCurrency, exchangeAddress)
   const [showUnlock, setShowUnlock] = useState(false)
@@ -593,7 +590,7 @@ export default function AddLiquidity() {
       </OversizedPanel>
       {renderSummary()}
       <Flex>
-        <Button disabled={!isValid} onClick={onAddLiquidity}>
+        <Button disabled={!isValid} onClick={onAddLiquidity} fullWidth>
           {t('addLiquidity')}
         </Button>
       </Flex>

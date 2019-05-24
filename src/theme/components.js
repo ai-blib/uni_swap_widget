@@ -1,9 +1,7 @@
-import styled, { keyframes } from 'styled-components'
+import styled from 'styled-components'
 import { lighten, darken } from 'polished'
 
-export const Button = styled.button.attrs(({ warning, theme }) => ({
-  backgroundColor: warning ? theme.salmonRed : theme.royalBlue
-}))`
+export const Button = styled.button`
   padding: 1rem 2rem 1rem 2rem;
   border-radius: 3rem;
   cursor: pointer;
@@ -11,18 +9,18 @@ export const Button = styled.button.attrs(({ warning, theme }) => ({
   font-size: 1rem;
   border: none;
   outline: none;
-  background-color: ${({ backgroundColor }) => backgroundColor};
+  background-color: ${({ theme }) => theme.royalBlue};
   color: ${({ theme }) => theme.white};
   transition: background-color 125ms ease-in-out;
   width: 100%;
 
   :hover,
   :focus {
-    background-color: ${({ backgroundColor }) => lighten(0.05, backgroundColor)};
+    background-color: ${({ theme }) => lighten(0.05, theme.royalBlue)};
   }
 
   :active {
-    background-color: ${({ backgroundColor }) => darken(0.05, backgroundColor)};
+    background-color: ${({ theme }) => darken(0.05, theme.royalBlue)};
   }
 
   :disabled {
@@ -69,19 +67,4 @@ export const BorderlessInput = styled.input`
   ::placeholder {
     color: ${({ theme }) => theme.mercuryGray};
   }
-`
-
-const rotate = keyframes`
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-`
-
-export const Spinner = styled.img`
-  animation: 2s ${rotate} linear infinite;
-  width: 16px;
-  height: 16px;
 `
