@@ -208,7 +208,7 @@ export default function CurrencyInputPanel({
   showUnlock,
   value
 }) {
-  const { t } = useTranslation()
+  const { t } = useTranslation();
 
   const [modalIsOpen, setModalIsOpen] = useState(false)
 
