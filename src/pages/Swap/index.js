@@ -7,6 +7,7 @@ import styled from 'styled-components'
 
 import { Button } from '../../theme'
 import CurrencyInputPanel from '../../components/CurrencyInputPanel'
+import NewContextualInfo from '../../components/ContextualInfoNew'
 import OversizedPanel from '../../components/OversizedPanel'
 import TransactionDetails from '../../components/TransactionDetails'
 import ArrowDownBlue from '../../assets/images/arrow-down-blue.svg'
@@ -26,14 +27,22 @@ const TOKEN_TO_ETH = 1
 const TOKEN_TO_TOKEN = 2
 
 // denominated in bips
-const ALLOWED_SLIPPAGE_DEFAULT = 100
-const TOKEN_ALLOWED_SLIPPAGE_DEFAULT = 100
+const ALLOWED_SLIPPAGE_DEFAULT = 150
+const TOKEN_ALLOWED_SLIPPAGE_DEFAULT = 200
 
 // denominated in seconds
 const DEADLINE_FROM_NOW = 60 * 15
 
 // denominated in bips
 const GAS_MARGIN = ethers.utils.bigNumberify(1000)
+
+const BlueSpan = styled.span`
+  color: ${({ theme }) => theme.royalBlue};
+`
+
+const LastSummaryText = styled.div`
+  margin-top: 1rem;
+`
 
 const DownArrowBackground = styled.div`
   ${({ theme }) => theme.flexRowNoWrap}
@@ -552,8 +561,6 @@ export default function Swap({ initialCurrency }) {
     })
   }
 
-  const [customSlippageError, setcustomSlippageError] = useState('')
-
   return (
     <>
       <CurrencyInputPanel
@@ -621,13 +628,13 @@ export default function Swap({ initialCurrency }) {
           {inverted ? (
             <span>
               {exchangeRate
-                ? `1 ${inputSymbol} = ${amountFormatter(exchangeRate, 18, 4, false)} ${outputSymbol}`
+                ? `1 ${outputSymbol} = ${amountFormatter(exchangeRateInverted, 18, 4, false)} ${inputSymbol}`
                 : ' - '}
             </span>
           ) : (
             <span>
               {exchangeRate
-                ? `1 ${outputSymbol} = ${amountFormatter(exchangeRateInverted, 18, 4, false)} ${inputSymbol}`
+                ? `1 ${inputSymbol} = ${amountFormatter(exchangeRate, 18, 4, false)} ${outputSymbol}`
                 : ' - '}
             </span>
           )}
@@ -657,15 +664,10 @@ export default function Swap({ initialCurrency }) {
         dependentDecimals={dependentDecimals}
         independentDecimals={independentDecimals}
         percentSlippageFormatted={percentSlippageFormatted}
-        setcustomSlippageError={setcustomSlippageError}
       />
       <Flex>
-        <Button
-          disabled={!isValid || customSlippageError === 'invalid'}
-          onClick={onSwap}
-          warning={highSlippageWarning || customSlippageError === 'warning'}
-        >
-          {highSlippageWarning || customSlippageError === 'warning' ? t('swapAnyway') : t('swap')}
+        <Button disabled={!isValid} onClick={onSwap} warning={highSlippageWarning}>
+          {highSlippageWarning ? t('swapAnyway') : t('swap')}
         </Button>
       </Flex>
     </>
