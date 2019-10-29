@@ -28,7 +28,7 @@
   "noLiquidity": "No liquidity.",
   "insufficientLiquidity": "Insufficient liquidity.",
   "unlockTokenCont": "Please unlock token to continue.",
-  "transactionDetails": "Transaction Details",
+  "transactionDetails": "Advanced Details",
   "hideDetails": "Hide Details",
   "slippageWarning": "Slippage Warning",
   "highSlippageWarning": "High Slippage Warning",
@@ -83,5 +83,6 @@
   "decimals": "Decimals",
   "enterTokenCont": "Enter a token address to continue",
   "priceChange": "Expected price slippage",
-  "forAtLeast" : "for at least "
+  "forAtLeast": "for at least ",
+  "brokenToken": "The selected token is not compatible with Uniswap V1. Adding liquidity will result in locked funds."
 }
