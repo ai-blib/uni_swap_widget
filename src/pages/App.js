@@ -4,31 +4,53 @@ import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom'
 
 import Web3ReactManager from '../components/Web3ReactManager'
 import Header from '../components/Header'
+import Footer from '../components/Footer'
+
 import NavigationTabs from '../components/NavigationTabs'
 import { isAddress, getAllQueryParams } from '../utils'
 
 const Swap = lazy(() => import('./Swap'))
 const Send = lazy(() => import('./Send'))
-const Pool = lazy(() => import('./Pool'))
+const Pool = lazy(() => import('./Supply'))
+const Add = lazy(() => import('./Supply/AddLiquidity'))
+const Remove = lazy(() => import('./Supply/RemoveLiquidity'))
+
+const AppWrapper = styled.div`
+  display: flex;
+  flex-flow: column;
+  align-items: flex-start;
+  height: 100vh;
+`
 
 const HeaderWrapper = styled.div`
   ${({ theme }) => theme.flexRowNoWrap}
   width: 100%;
   justify-content: space-between;
 `
+const FooterWrapper = styled.div`
+  width: 100%;
+  min-height: 30px;
+  align-self: flex-end;
+`
 
 const BodyWrapper = styled.div`
-  ${({ theme }) => theme.flexRowNoWrap}
+  display: flex;
+  flex-direction: column;
   width: 100%;
-  justify-content: center;
-  flex-grow: 1;
-  flex-basis: 0;
+  justify-content: flex-start;
+  align-items: center;
+  flex: 1;
   overflow: auto;
 `
 
 const Body = styled.div`
-  width: 35rem;
-  margin: 1.25rem;
+  max-width: 28rem;
+  width: 90%;
+  background: ${({ theme }) => theme.panelBackground};
+  box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.04), 0px 4px 8px rgba(0, 0, 0, 0.04), 0px 16px 24px rgba(0, 0, 0, 0.04),
+    0px 24px 32px rgba(0, 0, 0, 0.04);
+  border-radius: 20px;
+  padding: 2rem 1rem;
 `
 
 export default function App() {
@@ -80,16 +102,27 @@ export default function App() {
                           }
                         }}
                       />
+                      <Route exaxct path={'/supply'} component={() => <Pool params={params} />} />
                       <Route
-                        path={[
-                          '/add-liquidity',
-                          '/remove-liquidity',
-                          '/create-exchange',
-                          '/create-exchange/:tokenAddress?'
-                        ]}
-                        component={() => <Pool params={params} />}
+                        exact
+                        strict
+                        path={'/add/:tokens'}
+                        component={({ match }) => {
+                          const tokens = match.params.tokens.split('-')
+                          let t0
+                          let t1
+                          if (tokens) {
+                            t0 = tokens[0] === 'ETH' ? 'ETH' : isAddress(tokens[0])
+                            t1 = tokens[1] === 'ETH' ? 'ETH' : isAddress(tokens[1])
+                          }
+                          if (t0 && t1) {
+                            return <Add params={params} token0={t0} token1={t1} />
+                          } else {
+                            return <Redirect to={{ pathname: '/supply' }} />
+                          }
+                        }}
                       />
-                      <Redirect to="/swap" />
+                      <Route exaxct path={'/remove'} component={() => <Remove params={params} />} />
                     </Switch>
                   </Suspense>
                 </BrowserRouter>
