@@ -1,37 +1,15 @@
 import { Story } from '@storybook/react/types-6-0'
 import React from 'react'
-import Component, { LineChartProps } from './'
-import { dummyData } from './data'
 // import Row, { RowFixed } from 'components/Row'
 import styled from 'styled-components'
+import Component, { LineChartProps } from './'
+import { dummyData } from './data'
 // import { AutoColumn } from 'components/Column'
 // import { TYPE } from 'theme'
 // import DoubleCurrencyLogo from 'components/DoubleLogo'
 // import { MKR } from 'constants'
 // import { ETHER } from '@uniswap/sdk'
 // import LineChart from '.'
-
-const wrapperCss = styled.main`
-  font-size: 2em;
-  margin: 3em;
-  max-width: 300px;
-`
-export default {
-  title: 'Charts',
-  argTypes: {
-    disabled: { control: { type: 'boolean' } },
-    onClick: { action: 'clicked' },
-  },
-  decorators: [
-    (Component: Story) => (
-      <div css={wrapperCss}>
-        <Component />
-      </div>
-    ),
-  ],
-}
-
-const Template: Story<LineChartProps> = (args) => <Component {...args}>{args.children}</Component>
 
 const Wrapper = styled.div`
   margin: 1em 2em;
@@ -41,17 +19,25 @@ const Wrapper = styled.div`
   }
 `
 
+export default {
+  title: 'Charts',
+  argTypes: {
+    disabled: { control: { type: 'boolean' } },
+    onClick: { action: 'clicked' },
+  },
+  decorators: [
+    (Component: Story) => (
+      <Wrapper>
+        <Component />
+      </Wrapper>
+    ),
+  ],
+}
+
+const Template: Story<LineChartProps> = (args) => <Component {...args}>{args.children}</Component>
+
 export const Basic = Template.bind({})
 Basic.args = { data: dummyData }
-Basic.decorators = [
-  (Story: any) => {
-    return (
-      <Wrapper>
-        <Story />
-      </Wrapper>
-    )
-  },
-]
 
 // const Full = () => {
 //   const [value, setValue] = useState<number | undefined>(dummyData[dummyData.length - 1].value)
