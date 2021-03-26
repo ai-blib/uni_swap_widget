@@ -35,20 +35,17 @@ if (typeof GOOGLE_ANALYTICS_ID === 'string') {
     }
   })
   ReactGA.set({
-    customBrowserType: !isMobile
-      ? 'desktop'
-      : 'web3' in window || 'ethereum' in window
-      ? 'mobileWeb3'
-      : 'mobileRegular',
+    anonymizeIp: true,
+    customBrowserType: !isMobile ? 'desktop' : 'web3' in window || 'ethereum' in window ? 'mobileWeb3' : 'mobileRegular'
   })
 } else {
   ReactGA.initialize('test', { testMode: true, debug: true })
 }
 
-window.addEventListener('error', (error) => {
+window.addEventListener('error', error => {
   ReactGA.exception({
     description: `${error.message} @ ${error.filename}:${error.lineno}:${error.colno}`,
-    fatal: true,
+    fatal: true
   })
 })
 
