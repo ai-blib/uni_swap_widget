@@ -54,7 +54,6 @@ import FeeSelector from 'components/FeeSelector'
 import RangeSelector from 'components/RangeSelector'
 import RateToggle from 'components/RateToggle'
 import { BigNumber } from '@ethersproject/bignumber'
-import { calculateGasMargin } from 'utils'
 
 export default function AddLiquidity({
   match: {
@@ -188,21 +187,14 @@ export default function AddLiquidity({
     }
 
     if (position && account && deadline && fractionalizedTolerance) {
-      const { calldata, value } =
-        hasExistingPosition && tokenId
-          ? NonfungiblePositionManager.increaseCallParameters(position, {
-              tokenId,
-              slippageTolerance: fractionalizedTolerance,
-              deadline: deadline.toString(),
-              useEther: currencyA === ETHER || currencyB === ETHER,
-            })
-          : NonfungiblePositionManager.increaseCallParameters(position, {
-              slippageTolerance: fractionalizedTolerance,
-              recipient: account,
-              deadline: deadline.toString(),
-              useEther: currencyA === ETHER || currencyB === ETHER,
-              createPool: noLiquidity,
-            })
+      const { calldata, value } = NonfungiblePositionManager.increaseCallParameters(position, {
+        ...(hasExistingPosition && tokenId ? { tokenId } : {}),
+        slippageTolerance: fractionalizedTolerance,
+        recipient: account,
+        deadline: deadline.toNumber(),
+        useEther: currencyA === ETHER || currencyB === ETHER,
+        createPool: noLiquidity,
+      })
 
       const txn = {
         to: NONFUNGIBLE_POSITION_MANAGER_ADDRESSES[chainId],
@@ -218,10 +210,9 @@ export default function AddLiquidity({
         .then((estimate) => {
           const newTxn = {
             ...txn,
-            gasLimit: calculateGasMargin(estimate),
+            gasLimit: estimate,
           }
-
-          return library
+          library
             .getSigner()
             .sendTransaction(newTxn)
             .then((response: TransactionResponse) => {
@@ -237,6 +228,13 @@ export default function AddLiquidity({
                 action: 'Add',
                 label: [currencies[Field.CURRENCY_A]?.symbol, currencies[Field.CURRENCY_B]?.symbol].join('/'),
               })
+            })
+            .catch((error) => {
+              setAttemptingTxn(false)
+              // we only care if the error is something _other_ than the user rejected the tx
+              if (error?.code !== 4001) {
+                console.error(error)
+              }
             })
         })
         .catch((error) => {
