@@ -454,8 +454,11 @@ export default function AddLiquidity({
                             handleRateToggle={() => {
                               onLeftRangeInput('')
                               onRightRangeInput('')
-                              console.log('test')
-                              history.push(`/add/${currencyIdB as string}/${currencyIdA as string}`)
+                              history.push(
+                                `/add/${currencyIdB as string}/${currencyIdA as string}${
+                                  feeAmount ? '/' + feeAmount : ''
+                                }`
+                              )
                             }}
                           />
                         ) : null}
@@ -517,8 +520,9 @@ export default function AddLiquidity({
                         handleRateToggle={() => {
                           onLeftRangeInput('')
                           onRightRangeInput('')
-                          console.log('test')
-                          history.push(`/add/${currencyIdB as string}/${currencyIdA as string}`)
+                          history.push(
+                            `/add/${currencyIdB as string}/${currencyIdA as string}${feeAmount ? '/' + feeAmount : ''}`
+                          )
                         }}
                       />
                     ) : null}
