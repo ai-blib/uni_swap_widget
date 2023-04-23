@@ -48,6 +48,7 @@ export const TokenInput = forwardRef<TokenInputHandle, PropsWithChildren<TokenIn
   const input = useRef<HTMLInputElement>(null)
   const onSelect = useCallback(
     (currency: Currency) => {
+      console.log(currency,'currency')
       onChangeCurrency(currency)
       setImmediate(() => input.current?.focus())
     },

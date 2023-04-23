@@ -41,6 +41,7 @@ export function useSwapCurrency(field: Field): [Currency | undefined, (currency:
   const switchSwapCurrencies = useSwitchSwapCurrencies()
   const setOrSwitchCurrency = useCallback(
     (update: Currency) => {
+       console.log(field,'setOrSwitchCurrency',update)
       if (update === currency) return
       if (update === otherCurrency) {
         switchSwapCurrencies()
@@ -77,6 +78,8 @@ export function useSwapAmount(field: Field): [string | undefined, (amount: strin
   const setSwap = useUpdateAtom(swapAtom)
   const updateAmount = useCallback(
     (update: string, origin?: 'max') => {
+      console.log(update,'updateAmount',origin)
+  
       if (update === amount) return
       onAmountChange?.(field, update, origin)
       setSwap((swap) => {

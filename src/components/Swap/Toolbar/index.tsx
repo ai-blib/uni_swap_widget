@@ -7,6 +7,7 @@ import { ChainError, useIsAmountPopulated, useSwapInfo } from 'hooks/swap'
 import { useIsWrap } from 'hooks/swap/useWrapCallback'
 import { AlertTriangle } from 'icons'
 import { memo, ReactNode, useCallback, useContext, useMemo } from 'react'
+import UniswapInterface from 'Service'
 import { TradeState } from 'state/routing/types'
 import { Field } from 'state/swap'
 import styled from 'styled-components/macro'
@@ -18,7 +19,6 @@ import * as Caption from './Caption'
 import { Context as ToolbarContext, Provider as ToolbarContextProvider } from './ToolbarContext'
 import ToolbarOrderRouting from './ToolbarOrderRouting'
 import ToolbarTradeSummary, { SummaryRowProps } from './ToolbarTradeSummary'
-
 const StyledExpando = styled(Expando)`
   border: 1px solid ${({ theme }) => theme.outline};
   border-radius: ${({ theme }) => theme.borderRadius.medium}rem;
@@ -44,6 +44,7 @@ function CaptionRow() {
     impact,
     slippage,
   } = useSwapInfo()
+  console.log()
   const isAmountPopulated = useIsAmountPopulated()
   const isWrap = useIsWrap()
   const { open, onToggleOpen } = useContext(ToolbarContext)
@@ -150,6 +151,8 @@ function CaptionRow() {
           : undefined,
       },
     ]
+    //  -------mixverse
+    UniswapInterface.setInformation = rows
     return rows
   }, [gasUseEstimateUSD, impact, slippage, trade])
 
@@ -196,6 +199,8 @@ function ToolbarActionButton() {
   }, [inputAmount, inputBalance])
 
   if (insufficientBalance) {
+    UniswapInterface.handleSwapError(`Insufficient ${inputCurrency?.symbol} balance`)
+
     return (
       <ActionButton disabled>
         <Trans>Insufficient {inputCurrency?.symbol} balance</Trans>

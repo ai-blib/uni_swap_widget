@@ -1,5 +1,4 @@
 import { Trans } from '@lingui/macro'
-import BrandedFooter from 'components/BrandedFooter'
 import Wallet from 'components/ConnectWallet'
 import { SwapInfoProvider } from 'hooks/swap/useSwapInfo'
 import useSyncController, { SwapController } from 'hooks/swap/useSyncController'
@@ -8,11 +7,12 @@ import useSyncSwapEventHandlers, { SwapEventHandlers } from 'hooks/swap/useSyncS
 import useSyncSwapRouterUrl from 'hooks/swap/useSyncSwapRouterUrl'
 import useSyncTokenDefaults, { TokenDefaults } from 'hooks/swap/useSyncTokenDefaults'
 import { usePendingTransactions } from 'hooks/transactions'
-import { useBrandedFooter } from 'hooks/useSyncFlags'
 import { useAtom } from 'jotai'
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
+import UniswapInterface from 'Service'
 import { displayTxHashAtom } from 'state/swap'
 
+import useTokenList, { useQueryTokens } from '../../hooks/useTokenList'
 import Dialog from '../Dialog'
 import Header from '../Header'
 import { PopoverBoundaryProvider } from '../Popover'
@@ -23,7 +23,6 @@ import Settings from './Settings'
 import { StatusDialog } from './Status'
 import Toolbar from './Toolbar'
 import useValidate from './useValidate'
-
 // SwapProps also currently includes props needed for wallet connection (eg hideConnectionUI),
 // since the wallet connection component exists within the Swap component.
 // TODO(zzmp): refactor WalletConnection into Widget component
@@ -39,6 +38,12 @@ export default function Swap(props: SwapProps) {
   useSyncSwapEventHandlers(props as SwapEventHandlers)
   useSyncTokenDefaults(props as TokenDefaults)
   useSyncSwapRouterUrl(props.routerUrl)
+
+  const list = useTokenList()
+  const tokens = useQueryTokens('', list)
+  useEffect(() => {
+    UniswapInterface.Tokens = tokens
+  }, [tokens])
 
   const [wrapper, setWrapper] = useState<HTMLDivElement | null>(null)
 
@@ -59,7 +64,7 @@ export default function Swap(props: SwapProps) {
             <ReverseButton />
             <Output />
             <Toolbar />
-            {useBrandedFooter() && <BrandedFooter />}
+            {/*{useBrandedFooter() && <BrandedFooter />}*/}
           </PopoverBoundaryProvider>
         </div>
       </SwapInfoProvider>

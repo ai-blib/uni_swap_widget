@@ -17,6 +17,7 @@ import { feeOptionsAtom, Field, swapEventHandlersAtom } from 'state/swap'
 import { TransactionType } from 'state/transactions'
 import invariant from 'tiny-invariant'
 
+import UniswapInterface from 'Service'
 import ActionButton from '../../ActionButton'
 import { SummaryDialog } from '../Summary'
 import { useCollapseToolbar } from '../Toolbar/ToolbarContext'
@@ -107,6 +108,9 @@ export default function SwapButton({ disabled }: { disabled: boolean }) {
     setOpen(await onReviewSwapClick())
   }, [onReviewSwapClick, collapseToolbar])
 
+  useEffect(() => {
+    UniswapInterface.swapEvent = onClick
+  },[onClick])
   return (
     <>
       <ActionButton color={color} onClick={onClick} disabled={disabled}>

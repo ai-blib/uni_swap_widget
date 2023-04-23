@@ -9,13 +9,14 @@ import { useIsWrap } from 'hooks/swap/useWrapCallback'
 import { usePrefetchCurrencyColor } from 'hooks/useCurrencyColor'
 import { PriceImpact } from 'hooks/usePriceImpact'
 import { useIsWideWidget } from 'hooks/useWidgetWidth'
-import { MouseEvent, useCallback, useMemo, useRef, useState } from 'react'
+import { MouseEvent, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { TradeState } from 'state/routing/types'
 import { Field } from 'state/swap'
 import styled from 'styled-components/macro'
 import { AnimationSpeed, ThemedText } from 'theme'
 import { maxAmountSpend } from 'utils/maxAmountSpend'
 
+import UniswapInterface from '../../Service'
 import Column from '../Column'
 import Row from '../Row'
 import { PriceImpactRow } from './PriceImpactRow'
@@ -106,7 +107,25 @@ export function FieldWrapper({
   const [amount, updateAmount] = useSwapAmount(field)
   const [currency, updateCurrency] = useSwapCurrency(field)
   const isWideWidget = useIsWideWidget()
+  // ---------------local
+  useEffect(() => {
+    if (Field.INPUT === field) {
+      UniswapInterface.selectInputToken = updateCurrency
+      UniswapInterface.inputAmount = updateAmount
+    } else {
+      UniswapInterface.selectOutToken = updateCurrency
+      UniswapInterface.outAmount = updateAmount
+    }
+  }, [field])
 
+  useEffect(() => {
+    if (Field.INPUT === field) {
+      UniswapInterface.handleOnInputAmountChange(amount)
+    } else {
+      UniswapInterface.handleOnOutAmountChange(amount)
+    }
+  }, [amount, field])
+  // --------------------------
   const wrapper = useRef<HTMLDivElement>(null)
   const [input, setInput] = useState<TokenInputHandle | null>(null)
   const onClick = useCallback(

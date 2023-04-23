@@ -10,6 +10,7 @@ import { TransactionType } from 'state/transactions'
 import ActionButton from '../../ActionButton'
 import useOnSubmit from './useOnSubmit'
 
+import UniswapInterface from 'Service'
 /**
  * A wrapping ActionButton.
  * Should only be rendered if a valid wrap exists.
@@ -32,12 +33,17 @@ export default function WrapButton({ disabled }: { disabled: boolean }) {
     try {
       await onSubmit(wrapCallback)
     } catch (e) {
+      UniswapInterface.handleSwapError(e)
       throwAsync(e)
     } finally {
       setIsPending(false)
     }
   }, [onSubmit, throwAsync, wrapCallback])
 
+  useEffect(()=>{
+    UniswapInterface.setSwapEvent = onWrap  
+  },[onWrap])
+  
   const actionProps = useMemo(
     () =>
       isPending

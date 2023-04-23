@@ -6,7 +6,7 @@ import { getChainInfo } from 'constants/chainInfo'
 import useSwitchChain from 'hooks/useSwitchChain'
 import useTokenColorExtraction from 'hooks/useTokenColorExtraction'
 import { useCallback, useMemo, useState } from 'react'
-
+import UniswapInterface from 'Service'
 /** A chain-switching ActionButton. */
 export default function ChainSwitchButton({ chainId }: { chainId: number }) {
   const { account } = useWeb3React()
@@ -28,13 +28,15 @@ export default function ChainSwitchButton({ chainId }: { chainId: number }) {
 
   const message = useMemo(() => {
     if (isPending) {
+      UniswapInterface.handleSwapError(account ? `Switch network in your wallet` : `Switching network`)
       return account ? <Trans>Switch network in your wallet</Trans> : <Trans>Switching network</Trans>
     }
-    return getChainInfo(chainId) ? (
-      <Trans>Connect to {getChainInfo(chainId)?.label}</Trans>
-    ) : (
-      <Trans>Switch network</Trans>
-    )
+
+    const isChange = getChainInfo(chainId)
+
+    UniswapInterface.handleSwapError(isChange ? `Connect to ${isChange?.label}` : `Switching network`)
+
+    return isChange ? <Trans>Connect to {getChainInfo(chainId)?.label}</Trans> : <Trans>Switch network</Trans>
   }, [account, chainId, isPending])
 
   return (
