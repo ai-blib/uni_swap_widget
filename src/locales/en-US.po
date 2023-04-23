@@ -1,0 +1,508 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2023-04-19 20:19+0800\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: en-US\n"
+
+#: src/errors.ts
+msgid "'A Metamask error caused your wallet to disconnect. Reload the page to reconnect.'"
+msgstr "'A Metamask error caused your wallet to disconnect. Reload the page to reconnect.'"
+
+#: src/components/Swap/Summary/index.tsx
+msgid "A signature is needed to trade this token on the Uniswap protocol. For security, signatures expire after 30 days."
+msgstr "A signature is needed to trade this token on the Uniswap protocol. For security, signatures expire after 30 days."
+
+#: src/components/Swap/SwapActionButton/ApproveButton.tsx
+msgid "Allow"
+msgstr "Allow"
+
+#: src/components/Swap/SwapActionButton/ApproveButton.tsx
+msgid "Allow in your wallet"
+msgstr "Allow in your wallet"
+
+#: src/components/Swap/SwapActionButton/ApproveButton.tsx
+msgid "Allow {symbol} first"
+msgstr "Allow {symbol} first"
+
+#: src/components/Swap/SwapActionButton/ApproveButton.tsx
+msgid "Allowance pending"
+msgstr "Allowance pending"
+
+#: src/utils/swapErrorToUserReadableMessage.tsx
+msgid "An error occurred when trying to execute this swap. You may need to increase your slippage tolerance. If that does not work, there may be an incompatibility with the token you are trading. Note: fee on transfer and rebase tokens are incompatible with Uniswap V3."
+msgstr "An error occurred when trying to execute this swap. You may need to increase your slippage tolerance. If that does not work, there may be an incompatibility with the token you are trading. Note: fee on transfer and rebase tokens are incompatible with Uniswap V3."
+
+#: src/components/Swap/SwapActionButton/ApproveButton.tsx
+msgid "Approval pending"
+msgstr "Approval pending"
+
+#: src/components/Swap/SwapActionButton/ApproveButton.tsx
+msgid "Approve"
+msgstr "Approve"
+
+#: src/components/Swap/Summary/index.tsx
+msgid "Approve Permit2"
+msgstr "Approve Permit2"
+
+#: src/components/Swap/SwapActionButton/ApproveButton.tsx
+msgid "Approve in your wallet"
+msgstr "Approve in your wallet"
+
+#: src/components/Swap/Summary/index.tsx
+msgid "Approve {0} for trading"
+msgstr "Approve {0} for trading"
+
+#: src/components/Swap/SwapActionButton/ApproveButton.tsx
+msgid "Approve {symbol} first"
+msgstr "Approve {symbol} first"
+
+#: src/components/Swap/Settings/MaxSlippageSelect.tsx
+#: src/components/Swap/Settings/MaxSlippageSelect.tsx
+msgid "Auto"
+msgstr "Auto"
+
+#: src/components/Swap/RoutingDiagram/index.tsx
+msgid "Auto Router"
+msgstr "Auto Router"
+
+#: src/components/Swap/Settings/RouterPreferenceToggle.tsx
+msgid "Auto Router API"
+msgstr "Auto Router API"
+
+#: src/components/Swap/Input.tsx
+msgid "Balance:"
+msgstr "Balance:"
+
+#: src/components/Swap/RoutingDiagram/index.tsx
+msgid "Best price route costs {0} in gas. Your price is optimized by considering split routes, multiple hops, and gas costs."
+msgstr "Best price route costs {0} in gas. Your price is optimized by considering split routes, multiple hops, and gas costs."
+
+#: src/components/Swap/Speedbump/index.tsx
+#: src/components/Swap/Summary/index.tsx
+#: src/components/Swap/Summary/index.tsx
+#: src/components/Swap/Summary/index.tsx
+msgid "Cancel"
+msgstr "Cancel"
+
+#: src/components/Swap/Status/StatusDialog.tsx
+msgid "Close"
+msgstr "Close"
+
+#: src/components/Swap/Summary/index.tsx
+#: src/components/Swap/SwapActionButton/WrapButton.tsx
+msgid "Confirm in your wallet"
+msgstr "Confirm in your wallet"
+
+#: src/components/Swap/Summary/index.tsx
+msgid "Confirming approval"
+msgstr "Confirming approval"
+
+#: src/components/Swap/SwapActionButton/SwitchChainButton.tsx
+msgid "Connect to {0}"
+msgstr "Connect to {0}"
+
+#: src/components/ConnectWallet/ConnectWalletDialog.tsx
+#: src/components/Swap/SwapActionButton/ConnectWalletButton.tsx
+msgid "Connect wallet"
+msgstr "Connect wallet"
+
+#: src/components/Swap/Toolbar/Caption.tsx
+msgid "Connecting…"
+msgstr "Connecting…"
+
+#: src/components/Swap/Speedbump/index.tsx
+msgid "Continue"
+msgstr "Continue"
+
+#: src/components/Swap/Toolbar/Caption.tsx
+msgid "Convert {0} to {1}"
+msgstr "Convert {0} to {1}"
+
+#: src/components/Swap/Toolbar/Caption.tsx
+msgid "Convert {0} to {1} with no slippage"
+msgstr "Convert {0} to {1} with no slippage"
+
+#: src/components/ConnectWallet/ConnectedWalletChip.tsx
+msgid "Disconnect wallet"
+msgstr "Disconnect wallet"
+
+#: src/components/Swap/Status/StatusDialog.tsx
+#: src/errors.ts
+msgid "Dismiss"
+msgstr "Dismiss"
+
+#: src/components/Swap/Toolbar/Caption.tsx
+msgid "Enter an amount"
+msgstr "Enter an amount"
+
+#: src/components/Swap/Toolbar/Caption.tsx
+msgid "Error fetching trade"
+msgstr "Error fetching trade"
+
+#: src/components/Swap/Summary/Details.tsx
+msgid "Exchange rate"
+msgstr "Exchange rate"
+
+#: src/components/Swap/Toolbar/index.tsx
+msgid "Expected output"
+msgstr "Expected output"
+
+#: src/components/Swap/Toolbar/Caption.tsx
+msgid "Fetching best price…"
+msgstr "Fetching best price…"
+
+#: src/components/Error/ErrorBoundary.tsx
+msgid "Get support"
+msgstr "Get support"
+
+#: src/components/Swap/Summary/index.tsx
+msgid "Gives you the ability to trade this token on the Uniswap protocol. For security, this will expire in 30 days."
+msgstr "Gives you the ability to trade this token on the Uniswap protocol. For security, this will expire in 30 days."
+
+#: src/components/Swap/Settings/MaxSlippageSelect.tsx
+msgid "High slippage increases the risk of price movement"
+msgstr "High slippage increases the risk of price movement"
+
+#: src/components/ConnectWallet/ConnectWalletDialog.tsx
+msgid "I don't have a wallet"
+msgstr "I don't have a wallet"
+
+#: src/components/Swap/Toolbar/index.tsx
+msgid "Insufficient liquidity"
+msgstr "Insufficient liquidity"
+
+#: src/components/Swap/Toolbar/index.tsx
+msgid "Insufficient {0} balance"
+msgstr "Insufficient {0} balance"
+
+#: src/hooks/swap/useSwapCallback.tsx
+msgid "Invalid recipient"
+msgstr "Invalid recipient"
+
+#: src/components/Swap/Input.tsx
+msgid "Max"
+msgstr "Max"
+
+#: src/components/Swap/Settings/MaxSlippageSelect.tsx
+msgid "Max slippage"
+msgstr "Max slippage"
+
+#: src/components/Swap/Summary/Estimate.tsx
+msgid "Maximum input after slippage"
+msgstr "Maximum input after slippage"
+
+#: src/components/Swap/Summary/Estimate.tsx
+msgid "Minimum output after slippage"
+msgstr "Minimum output after slippage"
+
+#: src/hooks/swap/useSwapCallback.tsx
+msgid "Missing dependencies"
+msgstr "Missing dependencies"
+
+#: src/components/Swap/Summary/Details.tsx
+#: src/components/Swap/Toolbar/index.tsx
+msgid "Network fee"
+msgstr "Network fee"
+
+#: src/components/TokenSelect/index.tsx
+msgid "No results found."
+msgstr "No results found."
+
+#: src/components/TokenSelect/NoTokensAvailableOnNetwork.tsx
+msgid "No tokens are available on this network. Please switch to another network."
+msgstr "No tokens are available on this network. Please switch to another network."
+
+#: src/components/Swap/Toolbar/ToolbarOrderRouting.tsx
+msgid "Order routing"
+msgstr "Order routing"
+
+#: src/components/Swap/Summary/Estimate.tsx
+msgid "Output is estimated. You will receive at least {minReceivedString} or the transaction will revert."
+msgstr "Output is estimated. You will receive at least {minReceivedString} or the transaction will revert."
+
+#: src/components/Swap/Summary/Estimate.tsx
+msgid "Output is estimated. You will send at most {maxSentString} or the transaction will revert."
+msgstr "Output is estimated. You will send at most {maxSentString} or the transaction will revert."
+
+#: src/components/Swap/Summary/index.tsx
+#: src/components/Swap/Summary/index.tsx
+msgid "Permit2 allows safe sharing and management of token approvals across different smart contracts."
+msgstr "Permit2 allows safe sharing and management of token approvals across different smart contracts."
+
+#: src/components/Swap/Summary/index.tsx
+msgid "Permit2 approval failed"
+msgstr "Permit2 approval failed"
+
+#: src/components/Swap/Settings/MaxSlippageSelect.tsx
+msgid "Please enter a valid slippage %"
+msgstr "Please enter a valid slippage %"
+
+#: src/components/BrandedFooter.tsx
+msgid "Powered by the Uniswap protocol"
+msgstr "Powered by the Uniswap protocol"
+
+#: src/components/Swap/Summary/Details.tsx
+#: src/components/Swap/Toolbar/index.tsx
+msgid "Price impact"
+msgstr "Price impact"
+
+#: src/components/Swap/Summary/index.tsx
+msgid "Price updated"
+msgstr "Price updated"
+
+#: src/errors.ts
+msgid "Reload"
+msgstr "Reload"
+
+#: src/errors.ts
+msgid "Reload the page"
+msgstr "Reload the page"
+
+#: src/errors.ts
+msgid "Request rejected"
+msgstr "Request rejected"
+
+#: src/components/Swap/Summary/index.tsx
+#: src/components/Swap/SwapActionButton/SwapButton.tsx
+msgid "Review swap"
+msgstr "Review swap"
+
+#: src/components/TokenSelect/index.tsx
+msgid "Search by token name or address"
+msgstr "Search by token name or address"
+
+#: src/components/Swap/SwapActionButton/SwapButton.tsx
+#: src/components/TokenSelect/TokenButton.tsx
+#: src/components/TokenSelect/index.tsx
+#: src/components/TokenSelect/index.tsx
+msgid "Select token"
+msgstr "Select token"
+
+#: src/components/Error/ErrorView.tsx
+msgid "Show less"
+msgstr "Show less"
+
+#: src/components/Error/ErrorView.tsx
+msgid "Show more"
+msgstr "Show more"
+
+#: src/components/Error/ErrorView.tsx
+msgid "Something went wrong"
+msgstr "Something went wrong"
+
+#: src/errors.ts
+msgid "Sorry, an error occured while processing your request. Please try again or contact support."
+msgstr "Sorry, an error occured while processing your request. Please try again or contact support."
+
+#: src/components/Swap/Status/StatusDialog.tsx
+msgid "Success"
+msgstr "Success"
+
+#: src/components/Header.test.tsx
+#: src/components/Swap/Summary/index.tsx
+#: src/components/Swap/Summary/index.tsx
+#: src/components/Swap/index.tsx
+msgid "Swap"
+msgstr "Swap"
+
+#: src/hooks/swap/useSendSwapTransaction.tsx
+#: src/hooks/swap/useSendSwapTransaction.tsx
+msgid "Swap failed: {0}"
+msgstr "Swap failed: {0}"
+
+#: src/components/Swap/SwapActionButton/SwitchChainButton.tsx
+msgid "Switch network"
+msgstr "Switch network"
+
+#: src/components/Swap/SwapActionButton/SwitchChainButton.tsx
+msgid "Switch network in your wallet"
+msgstr "Switch network in your wallet"
+
+#: src/components/Swap/SwapActionButton/SwitchChainButton.tsx
+msgid "Switching network"
+msgstr "Switching network"
+
+#: src/components/Header.test.tsx
+msgid "Test Title"
+msgstr "Test Title"
+
+#: src/utils/swapErrorToUserReadableMessage.tsx
+msgid "The Uniswap invariant x*y=k was not satisfied by the swap. This usually means one of the tokens you are swapping incorporates custom behavior on transfer."
+msgstr "The Uniswap invariant x*y=k was not satisfied by the swap. This usually means one of the tokens you are swapping incorporates custom behavior on transfer."
+
+#: src/components/Swap/Toolbar/index.tsx
+msgid "The amount you expect to receive at the current market price. You may receive less or more if the market price changes while your transaction is pending."
+msgstr "The amount you expect to receive at the current market price. You may receive less or more if the market price changes while your transaction is pending."
+
+#: src/components/Swap/Input.tsx
+msgid "The estimated difference between the USD values of input and output amounts."
+msgstr "The estimated difference between the USD values of input and output amounts."
+
+#: src/components/Swap/Toolbar/index.tsx
+msgid "The fee paid to miners to process your transaction. This must be paid in ETH."
+msgstr "The fee paid to miners to process your transaction. This must be paid in ETH."
+
+#: src/components/Swap/Toolbar/index.tsx
+msgid "The impact your trade has on the market price of this pool."
+msgstr "The impact your trade has on the market price of this pool."
+
+#: src/utils/swapErrorToUserReadableMessage.tsx
+msgid "The input token cannot be transferred. There may be an issue with the input token."
+msgstr "The input token cannot be transferred. There may be an issue with the input token."
+
+#: src/components/Swap/Summary/index.tsx
+msgid "The network is confirming your Permit2 approval before you can swap."
+msgstr "The network is confirming your Permit2 approval before you can swap."
+
+#: src/utils/swapErrorToUserReadableMessage.tsx
+msgid "The output token cannot be transferred. There may be an issue with the output token."
+msgstr "The output token cannot be transferred. There may be an issue with the output token."
+
+#: src/utils/swapErrorToUserReadableMessage.tsx
+msgid "The output token cannot be transferred. There may be an issue with the output token. Note: fee on transfer and rebase tokens are incompatible with Uniswap V3."
+msgstr "The output token cannot be transferred. There may be an issue with the output token. Note: fee on transfer and rebase tokens are incompatible with Uniswap V3."
+
+#: src/components/Swap/PriceImpactRow.tsx
+msgid "There will be a large difference between your input and output values due to current liquidity."
+msgstr "There will be a large difference between your input and output values due to current liquidity."
+
+#: src/errors.ts
+msgid "This error was prompted by denying a request in your wallet."
+msgstr "This error was prompted by denying a request in your wallet."
+
+#: src/utils/swapErrorToUserReadableMessage.tsx
+msgid "This transaction could not be sent because the deadline has passed. Please check that your transaction deadline is not too low."
+msgstr "This transaction could not be sent because the deadline has passed. Please check that your transaction deadline is not too low."
+
+#: src/utils/swapErrorToUserReadableMessage.tsx
+msgid "This transaction will not succeed due to price movement. Try increasing your slippage tolerance. Note: fee on transfer and rebase tokens are incompatible with Uniswap V3."
+msgstr "This transaction will not succeed due to price movement. Try increasing your slippage tolerance. Note: fee on transfer and rebase tokens are incompatible with Uniswap V3."
+
+#: src/utils/swapErrorToUserReadableMessage.tsx
+msgid "This transaction will not succeed either due to price movement or fee on transfer. Try increasing your slippage tolerance."
+msgstr "This transaction will not succeed either due to price movement or fee on transfer. Try increasing your slippage tolerance."
+
+#: src/components/Swap/Summary/index.tsx
+msgid "This transaction will result in a"
+msgstr "This transaction will result in a"
+
+#: src/components/Swap/Settings/TransactionTtlInput.tsx
+msgid "Transaction deadline"
+msgstr "Transaction deadline"
+
+#: src/utils/swapErrorToUserReadableMessage.tsx
+msgid "Transaction rejected"
+msgstr "Transaction rejected"
+
+#: src/components/Swap/Status/StatusDialog.tsx
+msgid "Transaction submitted"
+msgstr "Transaction submitted"
+
+#: src/components/Swap/Summary/index.tsx
+msgid "Try again"
+msgstr "Try again"
+
+#: src/components/Swap/Status/StatusDialog.tsx
+msgid "Try increasing your slippage tolerance.<0/>NOTE: Fee on transfer and rebase tokens are incompatible with Uniswap V3."
+msgstr "Try increasing your slippage tolerance.<0/>NOTE: Fee on transfer and rebase tokens are incompatible with Uniswap V3."
+
+#: src/hooks/swap/useSendSwapTransaction.tsx
+msgid "Unexpected error. Could not estimate gas for the swap."
+msgstr "Unexpected error. Could not estimate gas for the swap."
+
+#: src/hooks/swap/useSendSwapTransaction.tsx
+msgid "Unexpected issue with estimating the gas. Please try again."
+msgstr "Unexpected issue with estimating the gas. Please try again."
+
+#: src/components/Swap/Settings/RouterPreferenceToggle.tsx
+msgid "Use the Uniswap Labs API to get faster quotes."
+msgstr "Use the Uniswap Labs API to get faster quotes."
+
+#: src/components/Swap/Status/StatusDialog.tsx
+msgid "View on Etherscan"
+msgstr "View on Etherscan"
+
+#: src/errors.ts
+msgid "Wallet disconnected"
+msgstr "Wallet disconnected"
+
+#: src/components/Swap/Speedbump/index.tsx
+msgid "Warning"
+msgstr "Warning"
+
+#: src/components/Swap/Input.tsx
+#: src/components/Swap/Summary/Details.tsx
+msgid "You pay"
+msgstr "You pay"
+
+#: src/components/Swap/Output.tsx
+#: src/components/Swap/Summary/Details.tsx
+msgid "You receive"
+msgstr "You receive"
+
+#: src/components/Swap/Status/StatusDialog.tsx
+msgid "Your swap failed."
+msgstr "Your swap failed."
+
+#: src/hooks/useUniversalRouter.ts
+msgid "Your swap was modified through your wallet. If this was a mistake, please cancel immediately or risk losing your funds."
+msgstr "Your swap was modified through your wallet. If this was a mistake, please cancel immediately or risk losing your funds."
+
+#: src/components/Swap/Toolbar/Caption.tsx
+msgid "Your trade will have a high impact on the market price of this pool."
+msgstr "Your trade will have a high impact on the market price of this pool."
+
+#: src/components/Swap/Settings/TransactionTtlInput.tsx
+msgid "Your transaction will revert if it has been pending for longer than this period of time."
+msgstr "Your transaction will revert if it has been pending for longer than this period of time."
+
+#: src/components/Swap/Settings/MaxSlippageSelect.tsx
+msgid "Your transaction will revert if the price changes unfavorably by more than this percentage."
+msgstr "Your transaction will revert if the price changes unfavorably by more than this percentage."
+
+#: src/components/Swap/Settings/TransactionTtlInput.tsx
+msgid "minutes"
+msgstr "minutes"
+
+#: src/components/Swap/Summary/index.tsx
+msgid "price impact on the market price of this pool. Do you wish to continue?"
+msgstr "price impact on the market price of this pool. Do you wish to continue?"
+
+#: src/components/Swap/Summary/index.tsx
+msgid "{0} approval failed"
+msgstr "{0} approval failed"
+
+#: src/components/Swap/SwapActionButton/WrapButton.tsx
+msgid "{0} {1}"
+msgstr "{0} {1}"
+
+#: src/utils/swapErrorToUserReadableMessage.tsx
+msgid ""
+"{0}. Try increasing your slippage tolerance.\n"
+"Note: fee-on-transfer and rebase tokens are incompatible with Uniswap V3."
+msgstr ""
+"{0}. Try increasing your slippage tolerance.\n"
+"Note: fee-on-transfer and rebase tokens are incompatible with Uniswap V3."
+
+#: src/components/ConnectWallet/ConnectWalletDialog.tsx
+msgid "{caption}"
+msgstr "{caption}"
+
+#: src/components/Swap/Summary/Details.tsx
+msgid "{integrator} fee"
+msgstr "{integrator} fee"
+
+#: src/hooks/usePermitAllowance.ts
+msgid "{symbol} permit allowance failed: {0}"
+msgstr "{symbol} permit allowance failed: {0}"
+
+#: src/hooks/useTokenAllowance.ts
+msgid "{symbol} token allowance failed: {0}"
+msgstr "{symbol} token allowance failed: {0}"
+
+#: src/components/BottomSheetModal.tsx
+msgid "{title}"
+msgstr "{title}"
